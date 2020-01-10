@@ -4,6 +4,7 @@ module.exports = {
 
   development: {
     client: 'sqlite3',
+    useNullAsDefault: true,
     connection: {
       filename: './data/recipes.db3'
     },
@@ -14,7 +15,6 @@ module.exports = {
       directory: './data/seeds'
     },
   },
-  useNullAsDefault: true,
   pool: {
     afterCreate: (conn, done) => {
       //runs after a connection is made to the sqlite engine
