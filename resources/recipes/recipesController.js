@@ -17,7 +17,9 @@ exports.getShoppingList = (req, res) => {
         .select('i.id', 'r_i.quantity', 'i.name')
         .where('r_i.r_id', recipeId)
         .then(list => {
-            res.json(list);
+            if (list.length > 0)
+                res.json(list);
+            else res.status(400).json({ message: `A recipe with id: ${recipeId} doesn't exist` })
         })
         .catch(err => {
             res.status(500).json({ message: 'Failed to get shopping list for recipe' })
@@ -31,7 +33,9 @@ exports.getInstructions = (req, res) => {
         .select('instructions')
         .where("id", recipeId)
         .then(recipes => {
-            res.json(recipes);
+            if (recipes.length > 0)
+                res.json(recipes);
+            else res.status(400).json({ message: `A recipe with id: ${recipeId} doesn't exist` })
         })
         .catch(err => {
             res.status(500).json({ message: 'Failed to get recipe instructions' })

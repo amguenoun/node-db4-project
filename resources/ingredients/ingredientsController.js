@@ -8,7 +8,9 @@ exports.getIngredientRecipes = (req, res) => {
         .select('r.name', 'r.id')
         .where('ri.i_id', ingredientId)
         .then(recipe => {
-            res.status(200).json(recipe);
+            if (recipe.length > 0)
+                res.json(recipe);
+            else res.status(400).json({ message: `An ingredient with id: ${ingredientId} doesn't exist` })
         })
         .catch(err => {
             res.status(500).json({ message: "Couldn't access database" })
