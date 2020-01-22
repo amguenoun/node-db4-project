@@ -9,6 +9,22 @@ exports.getRecipes = (req, res) => {
         })
 }
 
+exports.getRecipeById = async (req, res) => {
+    const recipeId = req.params.id
+    try {
+        const [recipe] = await db('recipes  ').where('id', recipeId)
+        if (recipe) {
+            res.status(200).json(recipe)
+        }
+        else {
+            res.status(400).json({ message: 'Id does not exits' })
+        }
+    }
+    catch (err) {
+        res.status(500).json({ message: 'Could not access db' })
+    }
+}
+
 exports.getShoppingList = (req, res) => {
     const recipeId = req.params.id;
 
