@@ -16,3 +16,19 @@ exports.getIngredientRecipes = (req, res) => {
             res.status(500).json({ message: "Couldn't access database" })
         })
 }
+
+exports.getIngredientById = async (req, res) => {
+    const ingredientId = req.params.id
+    try {
+        const [ingredient] = await db('ingredients').where('id', ingredientId)
+        if (ingredient) {
+            res.status(200).json(ingredient)
+        }
+        else {
+            res.status(400).json({ message: 'Id does not exits' })
+        }
+    }
+    catch (err) {
+        res.status(500).json({ message: 'Could not access db' })
+    }
+}
